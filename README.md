@@ -13,6 +13,7 @@ I am just interested in computer vision at lower resolutions (32x32 or 128x128) 
 - Counting the number of objects
 - Object recognition
 - ...
+- Telescope ???
          
 ## My related works
 
