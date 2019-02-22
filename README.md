@@ -13,8 +13,8 @@ I am just interested in computer vision at lower resolutions (32x32 or 128x128) 
 - Counting the number of objects
 - Object recognition
 - ...
-- Telescope ???
-         
+- Astronomical telescope? I made a number of telescopes on my own a long time ago.
+
 ## My related works
 
 Sensors used for adge AI:
