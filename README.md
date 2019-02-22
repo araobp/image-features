@@ -11,7 +11,7 @@ I am just interested in computer vision at lower resolutions (32x32 or 128x128).
 - [Camera (OV7670 CMOS image sensor)](https://github.com/araobp/stm32-mcu/blob/master/STM32F4-Discovery/Camera)
 - [AI-enabled rock-scissor-papers (X-CUBE-AI evaluation)](https://github.com/araobp/stm32-mcu/tree/master/NUCLEO-F401RE/AI)
 - [Acoustic features (MFSCs and MFCCs)](https://github.com/araobp/acoustic-features)
-- [My original DCT Type-II implementation](https://github.com/araobp/stm32-mcu/tree/master/NUCLEO-F401RE/DCT)
+- [My original DCT Type-II implementation on CMSIS-DSP](https://github.com/araobp/stm32-mcu/tree/master/NUCLEO-F401RE/DCT)
 - [Wireless network of infrared array sensors](https://github.com/araobp/pic16f1-mcu/blob/master/TWELITE.md)
 - [Motion logger with PIC16F18326, MPU9255, A1324LUA-T and EEPROM](https://github.com/araobp/pic16f1-mcu/blob/master/MOTION_LOGGER.md)
 
