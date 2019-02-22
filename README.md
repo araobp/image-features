@@ -8,13 +8,13 @@ I am just interested in computer vision at lower resolutions (32x32 or 128x128) 
 
 ## My related works
 
-### Projects (sort of edge AI things)
-
 Sensors used for adge AI:
 - 9-axis sensor (MEMS)
 - Mic sensor (MEMS)
 - Infrared array sensor
 - Image sensor
+
+### Projects (sort of edge AI things)
 
 - [Camera (OV7670 CMOS image sensor)](https://github.com/araobp/stm32-mcu/blob/master/STM32F4-Discovery/Camera)
 - [AI-enabled rock-scissor-papers (infrared array sensor)](https://github.com/araobp/stm32-mcu/tree/master/NUCLEO-F401RE/AI)
