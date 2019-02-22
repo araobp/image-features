@@ -7,11 +7,12 @@
 I am just interested in computer vision at lower resolutions (32x32 or 128x128) for edge AI.
 
 ## Development plan
+
 - Motion detection
 - Contour extraction
 - Counting the number of objects
 - Object recognition
-         :
+- ...
          
 ## My related works
 
