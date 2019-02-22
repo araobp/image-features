@@ -2,7 +2,7 @@
 
 ## Motivation
 
-I am just interested in computer vision at lower resolutions (32x32 or 128x128).
+I am just interested in computer vision at lower resolutions (32x32 or 128x128) for edge AI.
 
 ## My related works
 
