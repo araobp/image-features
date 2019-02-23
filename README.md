@@ -1,5 +1,6 @@
 # image-features
 
+<img src="./doc/viewer.jpg" width=300>
 (Work in progress)
 
 ## Motivation
