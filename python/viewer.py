@@ -137,6 +137,9 @@ if __name__ == '__main__':
         elif c == 'down':
             save()
 
+    def confirm():
+        canvas._tkcanvas.focus_set()
+        
     def _quit():
         itfc.close()
         root.quit()
@@ -144,8 +147,9 @@ if __name__ == '__main__':
    
     canvas.mpl_connect('key_press_event', on_key_event)
 
-    button_shutter = Tk.Button(master=frame_row1, text='Shutter', command=pixels, bg='lightblue', activebackground='grey', padx=PADX)
+    button_shutter = Tk.Button(master=frame_row1, text='Shutter', command=pixels, bg='turquoise', activebackground='grey', padx=PADX)
     button_continuous = Tk.Button(master=frame_row1, text='Continous', command=repeat_toggle, bg='lightblue', activebackground='grey', padx=PADX)
+    button_confirm = Tk.Button(master=frame_row1, text='Confirm', command=confirm, bg='lightblue', activebackground='grey', padx=PADX)
     button_screenshot = Tk.Button(master=frame_row1, text='Screenshot', command=screenshot, bg='lightblue', activebackground='grey', padx=PADX)
     button_quit = Tk.Button(master=frame_row1, text='Quit', command=_quit, bg='yellow', activebackground='grey', padx=PADX)
 
@@ -156,7 +160,7 @@ if __name__ == '__main__':
     button_sccb_write = Tk.Button(master=frame_row2, text='Write', command=sccb_write, bg='lightblue', activebackground='grey', padx=PADX)
 
     label_class = Tk.Label(master=frame_row3, text='Class label:')
-    entry = Tk.Entry(master=frame_row3, width=10)
+    entry = Tk.Entry(master=frame_row3, width=14)
     counter = Tk.Label(master=frame_row3)
     button_save = Tk.Button(master=frame_row3, text='Save', command=save, bg='lightblue', activebackground='grey', padx=PADX)
     button_remove = Tk.Button(master=frame_row3, text='Remove', command=remove, bg='lightblue', activebackground='grey', padx=PADX)
@@ -170,10 +174,11 @@ if __name__ == '__main__':
     frame_row0.pack(expand=True, fill=Tk.BOTH)
 
     ### Row 1: operation ####
-    button_shutter.grid(row=0, column=3, padx=PADX_GRID)
-    button_continuous.grid(row=0, column=4, padx=PADX_GRID)
-    button_screenshot.grid(row=0, column=7, padx=PADX_GRID)
-    button_quit.grid(row=0, column=8, padx=PADX_GRID)
+    button_shutter.grid(row=0, column=0, padx=PADX_GRID)
+    button_continuous.grid(row=0, column=1, padx=PADX_GRID)
+    button_confirm.grid(row=0, column=2, padx=PADX_GRID)
+    button_screenshot.grid(row=0, column=3, padx=PADX_GRID)
+    button_quit.grid(row=0, column=4, padx=PADX_GRID)
     frame_row1.pack(pady=PADY_GRID)
 
     ### Row 2: calibration ####
