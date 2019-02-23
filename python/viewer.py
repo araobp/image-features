@@ -15,26 +15,12 @@ import matplotlib.pyplot as plt
 import interface
 import image
 
-import h5py
-
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("port", help="serial port identifier")
 parser.add_argument("-s", "--size", help="image sizes", default="m")
 parser.add_argument("-e", "--effect", help="effect", default=None)
 args = parser.parse_args()
-
-'''
-def int2regvalue(value):
-    if value >= 0:
-        sign = 0b00000000
-    else:
-        sign = 0b10000000
-    value = abs(value)
-    if value > 127:
-        value = 127
-    return sign + value
-'''
 
 if __name__ == '__main__':
 
@@ -56,12 +42,12 @@ if __name__ == '__main__':
     frame_row0 = Tk.Frame(master=frame)
     frame_row1 = Tk.Frame(master=frame)
     frame_row2 = Tk.Frame(master=frame)
+    frame_row3 = Tk.Frame(master=frame)
 
     cnt = 0
     class_label_ = ''
     filename = None
     data = None
-    shape = (8, 8)
 
     repeat_action = False
 
@@ -118,15 +104,45 @@ if __name__ == '__main__':
         global fig
         fig.savefig('screen_shot.png')
 
+    def save():
+        global class_label_, cnt, filename, data
+        class_label = entry.get()
+        dt = datetime.today().strftime('%Y%m%d%H%M%S')
+        if class_label == '':
+            filename = './data/{}'.format(dt)
+        else:
+            filename = './data/{}-{}'.format(entry.get(), dt)
+            with open(filename+'.csv', "w") as f:
+                flattend_data = data.flatten()
+                f.write(','.join(flattend_data.astype(str)))
+            #np.save(filename, data)
+            if class_label_ != class_label:
+                class_label_ = class_label
+                cnt = 0
+            cnt += 1
+            counter.configure(text='({})'.format(str(cnt)))
+
+    def remove():
+        global filename, cnt
+        if filename:
+            os.remove(filename+'.csv')
+            cnt -= 1
+            counter.configure(text='({})'.format(str(cnt)))
+
+    def on_key_event(event):
+        c = event.key
+        print(c)
+        if c == 'up':
+            pixels()
+        elif c == 'down':
+            save()
+
     def _quit():
         itfc.close()
         root.quit()
         root.destroy() 
-
    
-    label_class = Tk.Label(master=frame_row1, text='Class label:')
-    entry = Tk.Entry(master=frame_row1, width=14)
-    counter = Tk.Label(master=frame_row1)
+    canvas.mpl_connect('key_press_event', on_key_event)
 
     button_shutter = Tk.Button(master=frame_row1, text='Shutter', command=pixels, bg='lightblue', activebackground='grey', padx=PADX)
     button_continuous = Tk.Button(master=frame_row1, text='Continous', command=repeat_toggle, bg='lightblue', activebackground='grey', padx=PADX)
@@ -139,6 +155,12 @@ if __name__ == '__main__':
     button_sccb_read = Tk.Button(master=frame_row2, text='Read', command=sccb_read, bg='lightblue', activebackground='grey', padx=PADX)
     button_sccb_write = Tk.Button(master=frame_row2, text='Write', command=sccb_write, bg='lightblue', activebackground='grey', padx=PADX)
 
+    label_class = Tk.Label(master=frame_row3, text='Class label:')
+    entry = Tk.Entry(master=frame_row3, width=10)
+    counter = Tk.Label(master=frame_row3)
+    button_save = Tk.Button(master=frame_row3, text='Save', command=save, bg='lightblue', activebackground='grey', padx=PADX)
+    button_remove = Tk.Button(master=frame_row3, text='Remove', command=remove, bg='lightblue', activebackground='grey', padx=PADX)
+
     ##### Place the parts on Tk #####
 
     frame.pack(expand=True, fill=Tk.BOTH)
@@ -148,10 +170,6 @@ if __name__ == '__main__':
     frame_row0.pack(expand=True, fill=Tk.BOTH)
 
     ### Row 1: operation ####
-    label_class.grid(row=0, column=0, padx=PADX_GRID)
-    entry.grid(row=0, column=1, padx=PADX_GRID)
-    counter.grid(row=0, column=2, padx=PADX_GRID)
-    counter.configure(text='({})'.format(str(cnt)))
     button_shutter.grid(row=0, column=3, padx=PADX_GRID)
     button_continuous.grid(row=0, column=4, padx=PADX_GRID)
     button_screenshot.grid(row=0, column=7, padx=PADX_GRID)
@@ -165,6 +183,15 @@ if __name__ == '__main__':
     button_sccb_read.grid(row=0, column=3, padx=PADX_GRID)
     button_sccb_write.grid(row=0, column=4, padx=PADX_GRID)
     frame_row2.pack(pady=PADY_GRID)
+
+    ### Row 3: save
+    label_class.grid(row=0, column=0, padx=PADX_GRID)
+    entry.grid(row=0, column=1, padx=PADX_GRID)
+    counter.grid(row=0, column=2, padx=PADX_GRID)
+    counter.configure(text='({})'.format(str(cnt)))
+    button_save.grid(row=0, column=3, padx=PADX_GRID)
+    button_remove.grid(row=0, column=4, padx=PADX_GRID)
+    frame_row3.pack(pady=PADY_GRID)
 
     ##### loop forever #####
     Tk.mainloop()

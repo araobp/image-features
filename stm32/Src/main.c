@@ -86,10 +86,10 @@ volatile mode output_mode = NOP;
 volatile uint8_t reg_addr = 0xff;
 uint8_t reg_value = 0;
 
-#ifdef OUTPUT_128
+#ifdef OUTPUT_128x128
   uint16_t image128[128][128];
   uint16_t prev_image128[128][128];
-#elif defined OUTPUT_32
+#elif defined OUTPUT_32x32
   uint16_t image32[32][32];
   uint16_t prev_image32[32][32];
   uint8_t gray_u8_32[32][32];
@@ -183,7 +183,7 @@ int main(void)
 
   ov7670_init(&hi2c1, &hdcmi);
   ov7670_conf();
-#ifdef OUTPUT_32
+#ifdef OUTPUT_32x32
   dct2_2d_init_f32(&S, 32, 32);
 #endif
   /* USER CODE END 2 */
@@ -210,7 +210,7 @@ int main(void)
       printf("pic_taken: %u\n", pic_taken);
 #endif
 
-#ifdef OUTPUT_128
+#ifdef OUTPUT_128x128
       qcif_to_128x128(framebuf, image128);
       switch(output_mode) {
       case DIFF:
@@ -221,7 +221,7 @@ int main(void)
         uart_tx((uint8_t *)image128, 128*128*2);
         break;
       }
-#elif defined OUTPUT_32
+#elif defined OUTPUT_32x32
       qcif_to_32x32(framebuf, image32);
       switch(output_mode) {
       case DIFF:

@@ -13,10 +13,8 @@ class GUI:
     # Use matplotlib to plot the output from the device
     def plot(self, ax, cmd, cmap=None):
 
-        data = self.interface.read(cmd)
-        
-        if cmd in (interface.PIXELS, interface.DIFF, interface.GRAY, interface.EDGE):
-            ax.set_title('Image')
-            ax.imshow(data, cmap=cmap)              
+        data = self.interface.read(cmd)        
+        ax.set_title('Image')
+        ax.imshow(data, cmap=cmap)              
     
         return data

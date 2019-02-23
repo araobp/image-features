@@ -71,21 +71,21 @@ void qcif_to_32x32(uint16_t src_image[QCIF_HEIGHT][QCIF_WIDTH], uint16_t dst_ima
 /**
  * Diff between frames.
  */
-#ifdef OUTPUT_128
+#ifdef OUTPUT_128x128
 void diff(uint16_t prev_image[128][128], uint16_t image[128][128]) {
-#elif defined OUTPUT_32
+#elif defined OUTPUT_32x32
 void diff(uint16_t prev_image[32][32], uint16_t image[32][32]) {
 #endif
   int32_t red, green, blue;
   uint16_t prev_pixel, pixel;
-#ifdef OUTPUT_128
+#ifdef OUTPUT_128x128
   for (int j=0; j<128; j++) {
     for (int i=0; i<128; i++) {
-#elif defined OUTPUT_32
+#elif defined OUTPUT_32x32
   for (int j=0; j<32; j++) {
     for (int i=0; i<32; i++) {
 #endif
-#if defined OUTPUT_128 || defined OUTPUT_32
+#if defined OUTPUT_128x128 || defined OUTPUT_32x32
       prev_pixel = prev_image[j][i];
       pixel = image[j][i];
       red = TO_RED(prev_pixel) - TO_RED(pixel);

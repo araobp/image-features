@@ -19,9 +19,9 @@ void qcif_to_128x128(uint16_t src_image[QCIF_HEIGHT][QCIF_WIDTH], uint16_t dst_i
 
 void qcif_to_32x32(uint16_t src_image[QCIF_HEIGHT][QCIF_WIDTH], uint16_t dst_image[32][32]);
 
-#ifdef OUTPUT_128
+#ifdef OUTPUT_128x128
 void diff(uint16_t prev_image[128][128], uint16_t image[128][128]);
-#elif defined OUTPUT_32
+#elif defined OUTPUT_32x32
 void diff(uint16_t prev_image[32][32], uint16_t image[32][32]);
 void to_grayscale(uint16_t image[32][32], uint8_t gray[32][32]);
 #endif

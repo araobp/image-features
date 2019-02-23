@@ -11,12 +11,13 @@
 
 /**
  * Image size setting
- * Comment out: QCIF
- * OUTPUT_128: 128x128
- * OUTPUT_32: 32x32
+ * QCIF_172x144: QCIF
+ * OUTPUT_128x128: 128x128
+ * OUTPUT_32x32: 32x32
  */
-//#define OUTPUT_32
-//#define OUTPUT_128
+//#define QCIF_172x144
+#define OUTPUT_32x32
+//#define OUTPUT_128x128
 
 /**
  * High-contrast color matrix setting
