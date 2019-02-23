@@ -7,14 +7,10 @@
 
 I am just interested in computer vision at lower resolutions (32x32 or 128x128) for edge AI.
 
-## Development plan
+## Limited resources
 
-- Motion detection
-- Contour extraction
-- Counting the number of objects
-- Object recognition
-- ...
-- Astronomical telescope in the end? I made a number of telescopes on my own a long time ago.
+- Since the RAM size of STM32F4 Discovery board is very limited (around 100KBytes), I mainly handle 32x32 resolution images in this project.
+- Although deep learning is quite a heavy task, it is possible to run deep learing on 32x32 resolution images with a limited number of classes on my PC.
 
 ## My related works
 
