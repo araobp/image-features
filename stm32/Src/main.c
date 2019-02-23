@@ -83,6 +83,8 @@ DMA_HandleTypeDef hdma_usart2_rx;
 volatile bool pic_taken = false;
 volatile char cmd;
 volatile mode output_mode = NOP;
+volatile uint8_t reg_addr = 0xff;
+uint8_t reg_value = 0;
 
 #ifdef OUTPUT_128
   uint16_t image128[128][128];
@@ -250,6 +252,11 @@ int main(void)
       output_mode = NOP;
     }
 
+    if (reg_addr != 0xff) {
+        sccb_read(reg_addr, &reg_value);
+        uart_tx(&reg_value, 1);
+        reg_addr = 0xff;
+    }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -497,7 +504,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
   static char cmd_line[8] = { '\0' };
   static int cnt = 0;
-  uint8_t value;
+  uint8_t addr;
+  uint16_t value;
 
   cmd_line[cnt] = cmd;
 
@@ -517,6 +525,17 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     case 'g':  // gray scale
       output_mode = GRAY;
       break;
+    case 'r':  // Read register
+      reg_addr = atoi(&cmd_line[1]);
+      reg_value = 0;
+      break;
+    case 'w':  // Write register
+      value = atoi(&cmd_line[1]);
+      addr = value / 256;
+      value = value % 256;
+      sccb_write(addr, (uint8_t)value);
+      break;
+      /*
     case 'b':  // brightness
       value = atoi(&cmd_line[1]);
       sccb_write(BRIGHT_ADDR, value);
@@ -525,6 +544,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
       value = atoi(&cmd_line[1]);
       sccb_write(CONTRAS_ADDR, value);
       break;
+      */
     default:
       break;
     }

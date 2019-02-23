@@ -15,7 +15,7 @@
  * OUTPUT_128: 128x128
  * OUTPUT_32: 32x32
  */
-#define OUTPUT_32
+//#define OUTPUT_32
 //#define OUTPUT_128
 
 /**
