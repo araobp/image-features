@@ -12,10 +12,26 @@ I am just interested in computer vision at lower resolutions (32x32 or 128x128) 
 - Since the RAM size of STM32F4 Discovery board is very limited (around 100KBytes), I mainly handle 32x32 resolution images in this project.
 - Although deep learning is quite a heavy task, it is possible to run deep learing on 32x32 resolution images with a limited number of classes on my PC.
 
+## Architecture
+
+
+```
+                 STM32L4 Discovery
+                ...................
+                :                 :
+ [OV7670]----->[DCMI]        [UASRT]------>[Python program on my PC]
+                :                 :
+                ...................
+```
+
 ## Code
 
 - [Firmware on STM32](./stm32)
-- [Image viewer (matplotlib/Tkinter)(./python)
+- [Image viewer (matplotlib/Tkinter)](./python)
+
+## Pedestal for the device
+
+I used my 3D printer to make a pair of pedestals for the device: [Pedestal (FreeCAD)](./freecad).
 
 ## Keras model (Jupyter Notebook)
 
