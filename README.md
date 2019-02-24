@@ -12,6 +12,10 @@ I am just interested in computer vision at lower resolutions (32x32 or 128x128) 
 - Since the RAM size of STM32F4 Discovery board is very limited (around 100KBytes), I mainly handle 32x32 resolution images in this project.
 - Although deep learning is quite a heavy task, it is possible to run deep learing on 32x32 resolution images with a limited number of classes on my PC.
 
+## Keras model (Jupyter Notebook)
+
+- [Rock-paper-scissors](./keras/rock_paper_scissors_cnn.ipynb)
+
 ## My related works
 
 Sensors used for adge AI:
