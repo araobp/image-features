@@ -113,7 +113,8 @@ void to_grayscale(uint16_t image[32][32], uint8_t gray[32][32]) {
   for (int j=0; j<32; j++) {
     for (int i=0; i<32; i++) {
       pixel = image[j][i];
-      gray[j][i] = ((TO_RED(pixel) << 1) + TO_GREEN(pixel) + (TO_BLUE(pixel) <<1)) / 3;
+      // convert RGB into Y
+      gray[j][i] = 0.299 * (TO_RED(pixel) << 3) + 0.587 * (TO_GREEN(pixel) << 2) + 0.144 * (TO_BLUE(pixel) << 3);
     }
   }
 }

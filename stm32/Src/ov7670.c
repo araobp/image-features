@@ -35,6 +35,7 @@ const uint8_t OV7670_CONFIG[][2] = {
   {MTXS_ADDR, 0x9e},
 #endif
   // Image size etc
+  //{CLKRC_ADDR, 0x01},
   {COM7_ADDR, QCIF | RGB},
   {COM15_ADDR, ZZ_TO_FF | RGB565},
   // Control features
