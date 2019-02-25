@@ -24,14 +24,15 @@ I am just interested in computer vision at lower resolutions (32x32 or 128x128) 
                 ...................
 ```
 
+## CAD
+
+- [Schematic (KiCad)](https://github.com/araobp/image-features/blob/master/kicad/ov7670_expansion_board.pdf)
+- [Pedestal for the device (FreeCAD)](./freecad).
+
 ## Code
 
 - [Firmware on STM32](./stm32)
 - [Image viewer (matplotlib/Tkinter)](./python)
-
-## Pedestal for the device
-
-I used my 3D printer to make a pair of pedestals for the device: [Pedestal (FreeCAD)](./freecad).
 
 ## Keras model (Jupyter Notebook)
 
