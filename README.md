@@ -40,6 +40,8 @@ I captured a hundred of images for each class (rock, paper, scissors) by using t
 
 ## X-CUBE-AI
 
+<img src="./doc/x-cube-ai.jpg" width=400>
+
 I made X-CUBE-AI/CubeMX to generate image classification code based on the Keras model. The code could classify "rock", "paper" and "scissors".
 
 ## My related works
