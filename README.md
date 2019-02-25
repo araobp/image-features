@@ -38,6 +38,10 @@ I am just interested in computer vision at lower resolutions (32x32 or 128x128) 
 
 I captured a hundred of images for each class (rock, paper, scissors) by using the viewer, then trained CNN with the data: [Rock-paper-scissors](./keras/rock_paper_scissors_cnn.ipynb).
 
+## X-CUBE-AI
+
+I made X-CUBE-AI/CubeMX to generate image classification code based on the Keras model. The code could classify "rock", "paper" and "scissors".
+
 ## My related works
 
 Sensors used for adge AI:
