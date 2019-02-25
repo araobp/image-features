@@ -9,6 +9,7 @@
 
 #include <stdint.h>
 #include "ov7670.h"
+#include "arm_math.h"
 
 /**
  * Enable averaging of 4x4 pixels
@@ -24,6 +25,7 @@ void diff(uint16_t prev_image[128][128], uint16_t image[128][128]);
 #elif defined OUTPUT_32x32
 void diff(uint16_t prev_image[32][32], uint16_t image[32][32]);
 void to_grayscale(uint16_t image[32][32], uint8_t gray[32][32]);
+void to_32x32x3(uint16_t src[32][32], float32_t dst[32][32][3]);
 #endif
 
 #endif /* IMAGE_H_ */

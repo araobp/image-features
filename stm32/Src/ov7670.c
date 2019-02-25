@@ -40,10 +40,11 @@ const uint8_t OV7670_CONFIG[][2] = {
   {COM15_ADDR, ZZ_TO_FF | RGB565},
   // Control features
   {0xB0, 0x84}, // Not in the datasheet, but it is necessary.
-  {AWBCTR0_ADDR, 0x93},  // Enable advanced AWB mode
+  {AWBCTR0_ADDR, 0x9b},  // Enable advanced AWB mode
   {COM9_ADDR, 0x4a},  // Automatic Gain ceiling
   {MVFP_ADDR, MIRROR_IMAGE | VERTICALLY_FLIP_IMAGE},
   {COM13_ADDR, GAMMA_ENABLED},
+  {NALG_ADDR, 0x94},  // NALG(7) enable histgram-based AEC
   {0xFF, 0xFF}
 };
 

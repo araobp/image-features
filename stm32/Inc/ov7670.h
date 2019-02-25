@@ -86,6 +86,9 @@
 //----- TSLB -----
 #define TSLB_ADDR 0x0c
 
+//----- AEC algorithm selection -----
+#define NALG_ADDR 0xaa
+
 //---- MTX1 ~ MTX6 -----
 #define MTX1_ADDR 0x4f
 #define MTX2_ADDR 0x50

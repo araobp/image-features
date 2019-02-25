@@ -104,6 +104,7 @@ void diff(uint16_t prev_image[32][32], uint16_t image[32][32]) {
 }
 #endif
 
+#ifdef OUTPUT_32x32
 /**
  * Convert RGB to gray scale.
  * Note: taking Y component of YUV format might be better.
@@ -118,3 +119,19 @@ void to_grayscale(uint16_t image[32][32], uint8_t gray[32][32]) {
     }
   }
 }
+
+/**
+ * Convert 32x32 RGB565 into 32x32x3 float array
+ */
+void to_32x32x3(uint16_t src[32][32], float32_t dst[32][32][3]) {
+  uint16_t pixel;
+  for (int j=0; j<32; j++) {
+    for (int i=0; i<32; i++) {
+      pixel = src[j][i];
+      dst[j][i][0] = (float32_t)(TO_RED(pixel));
+      dst[j][i][1] = (float32_t)(TO_GREEN(pixel));
+      dst[j][i][2] = (float32_t)(TO_BLUE(pixel));
+    }
+  }
+}
+#endif

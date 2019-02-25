@@ -52,6 +52,8 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "ai_platform.h"
+#include <stdbool.h>
 
 /* USER CODE END Includes */
 
@@ -106,6 +108,7 @@ void Error_Handler(void);
 #define SWO_GPIO_Port GPIOB
 #define OV7670_RESET_Pin GPIO_PIN_1
 #define OV7670_RESET_GPIO_Port GPIOE
+void   MX_USART2_UART_Init(void);
 /* USER CODE BEGIN Private defines */
 
 #define COEF_CUTOFF 6

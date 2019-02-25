@@ -40,6 +40,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "app_x-cube-ai.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -55,7 +56,7 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 typedef enum {
-  NOP, PIXELS, DIFF, GRAY, EDGE
+  NOP, PIXELS, DIFF, GRAY, EDGE, INFER
 } mode;
 
 /* USER CODE END PTD */
@@ -71,6 +72,8 @@ typedef enum {
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+CRC_HandleTypeDef hcrc;
+
 DCMI_HandleTypeDef hdcmi;
 DMA_HandleTypeDef hdma_dcmi;
 
@@ -96,6 +99,8 @@ uint8_t reg_value = 0;
   float32_t buf1_32[32][32];
   float32_t buf2_32[32][32];
   dct2_instance_f32 S;
+  ai_float in_data[32][32][3] = { { { 0.0f } } };
+  bool start_inference = false;
 #endif
 
   uint16_t framebuf[QCIF_HEIGHT][QCIF_WIDTH] = { 0 };
@@ -108,7 +113,8 @@ static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_DCMI_Init(void);
 static void MX_I2C1_Init(void);
-static void MX_USART2_UART_Init(void);
+void MX_USART2_UART_Init(void);
+static void MX_CRC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -177,7 +183,8 @@ int main(void)
   MX_DMA_Init();
   MX_DCMI_Init();
   MX_I2C1_Init();
-  MX_USART2_UART_Init();
+  MX_CRC_Init();
+  MX_X_CUBE_AI_Init();
   /* USER CODE BEGIN 2 */
   HAL_UART_Receive_IT(&huart2, (uint8_t *) &cmd, 1);
 
@@ -241,6 +248,10 @@ int main(void)
         f32_to_u8(buf1_32, gray_u8_32);
         uart_tx((uint8_t *)gray_u8_32, 32*32);
         break;
+      case INFER:  // Inference
+        to_32x32x3(image32, in_data);
+        start_inference = true;
+        break;
       default:
         uart_tx((uint8_t *)image32, 32*32*2);
         break;
@@ -259,6 +270,7 @@ int main(void)
     }
     /* USER CODE END WHILE */
 
+  MX_X_CUBE_AI_Process();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -305,6 +317,32 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   HAL_RCC_MCOConfig(RCC_MCO1, RCC_MCO1SOURCE_PLLCLK, RCC_MCODIV_4);
+}
+
+/**
+  * @brief CRC Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_CRC_Init(void)
+{
+
+  /* USER CODE BEGIN CRC_Init 0 */
+
+  /* USER CODE END CRC_Init 0 */
+
+  /* USER CODE BEGIN CRC_Init 1 */
+
+  /* USER CODE END CRC_Init 1 */
+  hcrc.Instance = CRC;
+  if (HAL_CRC_Init(&hcrc) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN CRC_Init 2 */
+
+  /* USER CODE END CRC_Init 2 */
+
 }
 
 /**
@@ -379,7 +417,7 @@ static void MX_I2C1_Init(void)
   * @param None
   * @retval None
   */
-static void MX_USART2_UART_Init(void)
+void MX_USART2_UART_Init(void)
 {
 
   /* USER CODE BEGIN USART2_Init 0 */
@@ -535,16 +573,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
       value = value % 256;
       sccb_write(addr, (uint8_t)value);
       break;
-      /*
-    case 'b':  // brightness
-      value = atoi(&cmd_line[1]);
-      sccb_write(BRIGHT_ADDR, value);
+    case 'i':  // Infer
+      output_mode = INFER;
       break;
-    case 'c':  // contrast
-      value = atoi(&cmd_line[1]);
-      sccb_write(CONTRAS_ADDR, value);
-      break;
-      */
     default:
       break;
     }
