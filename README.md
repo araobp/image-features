@@ -64,7 +64,7 @@ I made X-CUBE-AI/CubeMX to generate image classification code based on the Keras
        :
 ```
 
-I honestly admit that the result above was the best case.
+I honestly admit that the result above was the best case. I made a similar use case with an infrared array sensor in another project. I find that infrared array sensors are more suitable for this use case than image sensors.
 
 ### Motion detection
 
