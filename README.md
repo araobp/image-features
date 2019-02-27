@@ -64,11 +64,13 @@ I made X-CUBE-AI/CubeMX to generate image classification code based on the Keras
        :
 ```
 
-I honestly admit that the result above was the best case. I made a similar use case with an infrared array sensor in another project. I find that infrared array sensors are more suitable for this use case than image sensors.
+I honestly admit that the result above was the best case.
+
+I exchanged a camera with another one that supports 170 degrees view angle. Since the image sensor is not large enough, I could only get around 60 degrees. But the inference result was significantly improved.
 
 ### Motion detection
 
-I am purchasing a M12 lens with wider view angle for motion detection.
+Work in progress.
 
 ## My related works
 
