@@ -68,6 +68,8 @@ I honestly admit that the result above was the best case, because the view angle
 
 I exchanged a camera with another one that supports 170 degrees view angle. Since the image sensor is not big enough, I could only get around 60 degrees of view. **But the inference result was significantly improved.**
 
+<img src="./keras/layer0.png" width=700>
+
 **=> [Visualization of convolution layers](./keras/Visualization.ipynb)**
 
 ### Motion detection
