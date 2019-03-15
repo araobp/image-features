@@ -30,7 +30,6 @@ ai_float normalized_data[AI_MNETWORK_IN_1_SIZE];
  * X_std = (X - X.min(axis=0)) / (X.max(axis=0) - X.min(axis=0))
  */
 void normalize(ai_float *in_data, ai_float *normalized_data, int len) {
-
   ai_float x_max, x_min, x_max_min;
   uint32_t x_max_idx, x_min_idx;
 

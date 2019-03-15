@@ -56,6 +56,7 @@
 #include "ai_datatypes_defines.h"
 
 #include "ai.h"
+#include "ov7670.h"
 /*************************************************************************
   *
   */
@@ -63,13 +64,16 @@ void MX_X_CUBE_AI_Init(void)
 {
     MX_UARTx_Init();
     /* USER CODE BEGIN 0 */
+#ifdef OUTPUT_32x32
     ai_init();
+#endif
     /* USER CODE END 0 */
 }
 
 void MX_X_CUBE_AI_Process(void)
 {
     /* USER CODE BEGIN 1 */
+#ifdef OUTPUT_32x32
     extern ai_float in_data[AI_NETWORK_IN_1_SIZE];
     extern bool start_inference;
     ai_float out_data[AI_NETWORK_OUT_1_SIZE] = { 0.0 };
@@ -88,6 +92,7 @@ void MX_X_CUBE_AI_Process(void)
 
       start_inference = false;
     }
+#endif
     /* USER CODE END 1 */
 }
 
