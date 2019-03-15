@@ -38,7 +38,7 @@ I am just interested in computer vision at lower resolutions (32x32 or 128x128) 
 
 I captured a hundred of images for each class (rock, paper, scissors) by using the viewer, then trained CNN with the data: [Rock-paper-scissors](./keras/rock_paper_scissors_cnn.ipynb).
 
-## X-CUBE-AI use cases
+## Use cases
 
 ### Rock-paper-scissors
 
@@ -63,6 +63,14 @@ I made X-CUBE-AI/CubeMX to generate image classification code based on the Keras
  SCISSORS     31%
        :
 ```
+
+I honestly admit that the result above was the best case, because the view angle was too small (25 degrees is not enough for hand gesture recognition).
+
+I exchanged a camera with another one that supports 170 degrees view angle. Since the image sensor is not big enough, I could only get around 60 degrees of view. **But the inference result was significantly improved.**
+
+### Motion detection
+
+Work in progress.
 
 ## My related works
 
