@@ -72,9 +72,10 @@ I exchanged a camera with another one that supports 170 degrees view angle. Sinc
 
 **=> [Visualization of convolution layers](./keras/Visualization.ipynb)**
 
-### Motion detection
+### Fashion classification
 
-Work in progress.
+In this use case, I dare not collect fashion images as a dataset, and use the following data set instead to see if it works:
+https://github.com/zalandoresearch/fashion-mnist
 
 ## My related works
 
