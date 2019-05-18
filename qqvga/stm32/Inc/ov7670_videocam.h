@@ -1,7 +1,9 @@
 /*
  * ov7670_arducam.h
  *
- *  Created on: 2019/05/18
+ * Created on: 2019/05/18
+ *
+ * Reference: https://github.com/ArduCAM/Arduino/blob/master/OV7670FIFO/OV7670FIFO.ino
  */
 
 #ifndef OV7670_VIDEOCAM_H_
@@ -11,19 +13,33 @@
 #include "stm32f4xx_hal.h"
 #include <string.h>
 
-// VGA Default
-#define ThirtyFPS
-
 typedef enum {
   THIRTY_FPS, NIGHT_MODE
 } fps_mode;
 
-char AWBParam[] = "SAWB";
-char AECParam[] = "HistAEC";
-char YUVMatrixParam[] = "YUVMatrixOn";
-char DenoiseParam[] = "DenoiseNo";
-char EdgeParam[] = "EdgeNo";
-char ABLCParam[] = "AblcON";
+typedef enum {
+  SAWB, AAWB
+} awb_param;
+
+typedef enum {
+  HIST_AEC, AVE_AEC
+} aec_param;
+
+typedef enum {
+  YUV_MATRIX_ON, YUV_MATRIX_OFF
+} yuv_matrix_param;
+
+typedef enum {
+  DENOISE_YES, DENOISE_NO
+} denoise_param;
+
+typedef enum {
+  EDGE_YES, EDGE_NO
+} edge_param;
+
+typedef enum {
+  ABLC_ON, ABLC_OFF
+} ablc_param ;
 
 // Camera input/output pin connection to Arduino
 #define WRST  25      // Output Write Pointer Reset
@@ -529,8 +545,8 @@ void SetupCameraFor30FPS() {
   sccb_write(COM11, COM11_VALUE_30FPS);
 }
 
-void SetupCameraABLC() {
-  if (strcmp(ABLCParam, "AblcOFF") == 0) {
+void SetupCameraABLC(ablc_param param) {
+  if (param == ABLC_OFF) {
     return;
   }
   sccb_write(ABLC1, ABLC1_VALUE);
@@ -602,26 +618,26 @@ void SetCameraFPSMode(fps_mode mode) {
   }
 }
 
-void SetCameraAEC() {
+void SetCameraAEC(aec_param param) {
   // Process AEC
-  if (strcmp(AECParam, "AveAEC") == 0) {
+  if (param == AVE_AEC) {
     // Set Camera's Average AEC/AGC Parameters
     SetupCameraAverageBasedAECAGC();
-  } else if (strcmp(AECParam, "HistAEC") == 0) {
+  } else if (param == HIST_AEC) {
     // Set Camera AEC algorithim to Histogram
     SetCameraHistogramBasedAECAGC();
   }
 }
 
-void SetupCameraAWB() {
+void SetupCameraAWB(awb_param param) {
   // Set AWB Mode
-  if (strcmp(AWBParam, "SAWB") == 0) {
+  if (param == SAWB) {
     // Set Simple Automatic White Balance
     SetupCameraSimpleAutomaticWhiteBalance(); // OK
 
     // Set Gain Config
     SetupCameraGain();
-  } else if (strcmp(AWBParam, "AAWB") == 0) {
+  } else if (param == AAWB) {
     // Set Advanced Automatic White Balance
     SetupCameraAdvancedAutomaticWhiteBalance(); // ok
 
@@ -644,17 +660,17 @@ void SetupCameraEdgeEnhancement() {
   sccb_write(REG76, REG76_VALUE);
 }
 
-void SetupCameraDenoiseEdgeEnhancement() {
-  if (strcmp(DenoiseParam, "DenoiseYes") == 0 && strcmp(EdgeParam, "EdgeYes") == 0) {
+void SetupCameraDenoiseEdgeEnhancement(denoise_param param1, edge_param param2) {
+  if (param1 == DENOISE_YES && param2 == EDGE_YES) {
     SetupCameraDenoise();
     SetupCameraEdgeEnhancement();
     sccb_write(COM16,
         COM16_VALUE_DENOISE_ON__EDGE_ENHANCEMENT_ON__AWBGAIN_ON);
-  } else if (strcmp(DenoiseParam, "DenoiseYes") == 0 && strcmp(EdgeParam, "EdgeNo") == 0) {
+  } else if (param1 == DENOISE_YES && param2 == EDGE_NO) {
     SetupCameraDenoise();
     sccb_write(COM16,
         COM16_VALUE_DENOISE_ON__EDGE_ENHANCEMENT_OFF__AWBGAIN_ON);
-  } else if (strcmp(DenoiseParam, "DenoiseNo") == 0 && strcmp(EdgeParam, "EdgeYes") == 0) {
+  } else if (param1 == DENOISE_NO && param2 == EDGE_YES) {
     SetupCameraEdgeEnhancement();
     sccb_write(COM16,
         COM16_VALUE_DENOISE_OFF__EDGE_ENHANCEMENT_ON__AWBGAIN_ON);
@@ -693,24 +709,22 @@ void SetupOV7670ForQQVGAYUV(fps_mode mode) {
   SetCameraFPSMode(mode);
 
   // Set Camera Automatic Exposure Control
-  SetCameraAEC();
+  SetCameraAEC(HIST_AEC);
 
   // Set Camera Automatic White Balance
-  SetupCameraAWB();
+  SetupCameraAWB(SAWB);
 
   // Setup Undocumented Registers - Needed Minimum
   SetupCameraUndocumentedRegisters();
 
   // Set Color Matrix for YUV
-  if (strcmp(YUVMatrixParam, "YUVMatrixOn") == 0) {
-    SetCameraColorMatrixYUV();
-  }
+  SetCameraColorMatrixYUV(YUV_MATRIX_ON);
 
   // Set Camera Saturation
   SetCameraSaturationControl();
 
   // Denoise and Edge Enhancement
-  SetupCameraDenoiseEdgeEnhancement();
+  SetupCameraDenoiseEdgeEnhancement(DENOISE_NO, EDGE_NO);
 
   // Set New Gamma Values
   //SetCameraGamma();
@@ -722,7 +736,7 @@ void SetupOV7670ForQQVGAYUV(fps_mode mode) {
   SetupCameraADCControl();
 
   // Set Automatic Black Level Calibration
-  SetupCameraABLC();
+  SetupCameraABLC(ABLC_ON);
 
   // Change Window Output parameters after custom scaling
   sccb_write(HSTART, HSTART_VALUE_QQVGA);

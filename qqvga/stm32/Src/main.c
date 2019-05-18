@@ -58,8 +58,8 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 typedef enum {
-  NOP, PIXELS, DIFF, GRAY, EDGE, INFER
-} mode;
+  NOP, FULL_FRAME, DIFF, GRAY, EDGE, INFER
+} command;
 
 /* USER CODE END PTD */
 
@@ -87,7 +87,7 @@ DMA_HandleTypeDef hdma_usart2_rx;
 /* USER CODE BEGIN PV */
 volatile bool pic_taken = false;
 volatile char cmd;
-volatile mode output_mode = NOP;
+volatile command output_mode = NOP;
 volatile uint8_t reg_addr = 0xff;
 uint8_t reg_value = 0;
 
@@ -561,7 +561,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     cnt = 0;
     switch (cmd_line[0]) {
     case 'p':  // pixels
-      output_mode = PIXELS;
+      output_mode = FULL_FRAME;
       break;
     case 'd':  // diff
       output_mode = DIFF;
