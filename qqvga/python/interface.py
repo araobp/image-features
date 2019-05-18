@@ -19,15 +19,15 @@ BRIGHTNESS_ADDR = 0x55
 CONTRAS_ADDR = 0x56
 
 # Image size
-QQVGA_WIDTH = 120
+QQVGA_WIDTH = 160
 QQVGA_HEIGHT = 120
 
 NUM_SAMPLES = {"q": QQVGA_WIDTH * QQVGA_HEIGHT * 2,
-               "m": 128 * 128 * 2,
+               "m": 120 * 120 * 2,
                "s": 32 * 32 * 2}
 
 SHAPE = {"q": (QQVGA_HEIGHT, QQVGA_WIDTH, 3),
-         "m": (128, 128, 3),
+         "m": (120, 120, 3),
          "s": (32, 32, 3)}
 
 def yuv2rgb(y, u, v):
