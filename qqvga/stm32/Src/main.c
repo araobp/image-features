@@ -105,7 +105,7 @@ uint8_t reg_value = 0;
   bool start_inference = false;
 #endif
 
-  uint16_t framebuf[QQVGA_HEIGHT][QQVA_WIDTH] = { 0 };
+  uint16_t framebuf[QQVGA_HEIGHT][QQVGA_WIDTH] = { 0 };
 
 /* USER CODE END PV */
 
@@ -191,10 +191,12 @@ int main(void)
   HAL_UART_Receive_IT(&huart2, (uint8_t *) &cmd, 1);
 
   ov7670_init(&hi2c1, &hdcmi);
-  //ov7670_conf();
+
   //SetupOV7670ForQQVGAYUV(THIRTY_FPS);
   SetupOV7670ForQQVGAYUV(NIGHT_MODE);
-  ReadRegisters();
+
+  //ReadRegisters();
+
 #ifdef OUTPUT_32x32
   dct2_2d_init_f32(&S, 32, 32);
 #endif
@@ -205,7 +207,7 @@ int main(void)
   while (1)
   {
     if (output_mode > NOP) {
-      ov7670_take_snapshot((uint32_t)framebuf, QQVA_WIDTH * QQVGA_HEIGHT / 2);
+      ov7670_take_snapshot((uint32_t)framebuf, QQVGA_WIDTH * QQVGA_HEIGHT / 2);
       while (!pic_taken);
 
 #ifdef DEBUG
@@ -262,7 +264,9 @@ int main(void)
         break;
       }
 #else
-      uart_tx((uint8_t *)framebuf, QQVA_WIDTH * QQVGA_HEIGHT * 2);
+      qqvga_to_120x120((uint16_t *)framebuf, (uint16_t *)framebuf);
+      uart_tx((uint8_t *)framebuf, 120 * 120 * 2);
+      //uart_tx((uint8_t *)framebuf, QQVGA_WIDTH * QQVGA_HEIGHT * 2);
 #endif
       pic_taken = false;
       output_mode = NOP;

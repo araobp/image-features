@@ -113,7 +113,7 @@
 #define VER_ADDR 0x0b
 
 /*----- Picture width and height ------------*/
-#define QQVA_WIDTH 160
+#define QQVGA_WIDTH 160
 #define QQVGA_HEIGHT 120
 
 int sccb_read(uint8_t reg_addr, uint8_t *pdata);

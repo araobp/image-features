@@ -5,6 +5,7 @@
  */
 
 #include "image.h"
+#include "ov7670.h"
 
 // RGB565 (uint16_t)
 #define RED_FIELD 0b1111100000000000
@@ -17,15 +18,17 @@
 #define TO_RGB565(red, green, blue) ((red << 11) | (green << 5) | blue)
 
 /**
- * QQVGA to 120x120
- *
- * This function just cuts out a square of 128x128 pixels from QCIF.
+ * Truncate QQVGA to 120x120
  */
-void qqvga_to_120x120(uint16_t src_image[QQVGA_HEIGHT][QQVA_WIDTH], uint16_t dst_image[128][128]) {
+void qqvga_to_120x120(uint16_t *pSrc, uint16_t *pDst) {
   // Raster scanning
+  int src_idx = 0;
+  int dst_idx = 0;
   for (int j=0; j<120; j++) {
     for (int i=0; i<120; i++) {
-      dst_image[j][i] = src_image[j+8][i+22];
+      src_idx = j * QQVGA_WIDTH + i + 20;
+      dst_idx = j * 120 + i;
+      pDst[dst_idx] = pSrc[src_idx];
     }
   }
 }
@@ -36,7 +39,7 @@ void qqvga_to_120x120(uint16_t src_image[QQVGA_HEIGHT][QQVA_WIDTH], uint16_t dst
  * This function applies 128x128 pixel window to cut out a square from QCIF,
  * then takes averages of each 4x4 pixels for RGB.
  */
-void qcif_to_32x32(uint16_t src_image[QQVGA_HEIGHT][QQVA_WIDTH], uint16_t dst_image[32][32]) {
+void qqvga_to_30x30(uint16_t src_image[QQVGA_HEIGHT][QQVGA_WIDTH], uint16_t dst_image[32][32]) {
 #ifdef AVERAGE_4x4
   uint16_t red, green, blue, pixel;
 #endif

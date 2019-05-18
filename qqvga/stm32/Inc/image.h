@@ -16,16 +16,8 @@
  */
 #define AVERAGE_4x4
 
-void qcif_to_128x128(uint16_t src_image[QQVGA_HEIGHT][QQVA_WIDTH], uint16_t dst_image[128][128]);
+void qqvga_to_120x120(uint16_t *pSrc, uint16_t *pDst);
 
-void qcif_to_32x32(uint16_t src_image[QQVGA_HEIGHT][QQVA_WIDTH], uint16_t dst_image[32][32]);
-
-#ifdef OUTPUT_128x128
-void diff(uint16_t prev_image[128][128], uint16_t image[128][128]);
-#elif defined OUTPUT_32x32
-void diff(uint16_t prev_image[32][32], uint16_t image[32][32]);
-void to_grayscale(uint16_t image[32][32], uint8_t gray[32][32]);
-void to_32x32x3(uint16_t src[32][32], float32_t dst[32][32][3]);
-#endif
+void qqvga_to_30x30(uint16_t src_image[QQVGA_HEIGHT][QQVGA_WIDTH], uint16_t dst_image[32][32]);
 
 #endif /* IMAGE_H_ */
