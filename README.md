@@ -1,7 +1,8 @@
 # image-features
 
 <img src="./doc/viewer.jpg" width=300>
-(Work in progress)
+
+(Work in progress, migrating RGB565 to YUV4:2:2)
 
 ## Motivation
 
