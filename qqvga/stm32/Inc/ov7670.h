@@ -122,8 +122,6 @@ int sccb_write(uint8_t reg_addr, uint8_t data);
 
 void ov7670_init(I2C_HandleTypeDef *p_hi2c, DCMI_HandleTypeDef *p_hdcmi);
 
-void ov7670_conf(void);
-
 void ov7670_take_snapshot(uint32_t buf_addr, int len);
 
 void ov7670_take_continuous(uint32_t buf_addr, int len);

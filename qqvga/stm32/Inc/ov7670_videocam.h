@@ -41,24 +41,6 @@ typedef enum {
   ABLC_ON, ABLC_OFF
 } ablc_param ;
 
-// Camera input/output pin connection to Arduino
-#define WRST  25      // Output Write Pointer Reset
-#define RRST  23      // Output Read Pointer Reset
-#define WEN   24      // Output Write Enable
-#define VSYNC 22      // Input Vertical Sync marking frame capture
-#define RCLK  26      // Output FIFO buffer output clock
-// set OE to low gnd
-
-// FIFO Ram input pins
-#define DO7   28
-#define DO6   29
-#define DO5   30
-#define DO4   31
-#define DO3   32
-#define DO2   33
-#define DO1   34
-#define DO0   35
-
 // Register addresses and values
 #define CLKRC                 0x11
 #define CLKRC_VALUE_VGA       0x01  // Raw Bayer
@@ -120,6 +102,7 @@ typedef enum {
 #define SCALING_PCLK_DIV_VALUE_VGA    0xF0 // Raw Bayer
 #define SCALING_PCLK_DIV_VALUE_QVGA   0xF1
 #define SCALING_PCLK_DIV_VALUE_QQVGA  0xF2
+
 
 #define SCALING_PCLK_DELAY              0xA2
 #define SCALING_PCLK_DELAY_VALUE_VGA    0x02 // Raw Bayer

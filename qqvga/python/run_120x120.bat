@@ -1,1 +1,1 @@
-python viewer.py -s m COM13
+python viewer.py -s s COM13

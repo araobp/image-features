@@ -14,40 +14,6 @@ DCMI_HandleTypeDef *phdcmi;
 uint8_t pid;
 uint8_t ver;
 
-/* OV7670 config data
- *
- * Note for my device:
- * - Register at 0xB0 is not in the datasheet. By setting this register,
- * I could get color images (w/o the setting, I got gray scale images).
- * - White balance: Advanced AWB mode is better than Normal AWB mode.
- * - Automatic gain ceiling: 0x4a is default, but 0x6a outputs brighter image.
- * - The following color matrix setting seemed to increase contrast.
- */
-const uint8_t OV7670_CONFIG[][2] = {
-  // Color matrix setting
-#ifdef HIGH_CONTRAST
-  {MTX1_ADDR,0x80},
-  {MTX2_ADDR,0x80},
-  {MTX3_ADDR,0x00},
-  {MTX4_ADDR,0x22},
-  {MTX5_ADDR,0x5e},
-  {MTX6_ADDR,0x80},
-  {MTXS_ADDR, 0x9e},
-#endif
-  // Image size etc
-  //{CLKRC_ADDR, 0x01},
-  {COM7_ADDR, QCIF | RGB},
-  {COM15_ADDR, ZZ_TO_FF | RGB565},
-  // Control features
-  {0xB0, 0x84}, // Not in the datasheet, but it is necessary.
-  {AWBCTR0_ADDR, 0x9b},  // Enable advanced AWB mode
-  {COM9_ADDR, 0x4a},  // Automatic Gain ceiling
-  {MVFP_ADDR, MIRROR_IMAGE | VERTICALLY_FLIP_IMAGE},
-  {COM13_ADDR, GAMMA_ENABLED},
-  {NALG_ADDR, 0x94},  // NALG(7) enable histgram-based AEC
-  {0xFF, 0xFF}
-};
-
 int sccb_write(uint8_t reg_addr, uint8_t data) {
   uint8_t buf[2] = { 0 };
   HAL_StatusTypeDef status;
@@ -129,31 +95,3 @@ void ov7670_init(I2C_HandleTypeDef *p_hi2c, DCMI_HandleTypeDef *p_hdcmi) {
 #endif
 
 }
-
-/**
- * OV7670 configuration
- */
-void ov7670_conf(void) {
-  int i = 0;
-  uint8_t reg_addr, data, data_read;
-  while (1) {
-    reg_addr = OV7670_CONFIG[i][0];
-    data = OV7670_CONFIG[i][1];
-    if (reg_addr == 0xff) break;
-
-    sccb_read(reg_addr, &data_read);
-    sccb_write(reg_addr, data);
-#ifdef DEBUG
-    printf("sccb write: 0x%x 0x%x=>0x%x\n", reg_addr, data_read, data);
-#endif
-    HAL_Delay(30);
-    sccb_read(reg_addr, &data_read);
-#ifdef DEBUG
-    if (data != data_read) {
-      printf("sccb write failure: 0x%x 0x%x\n", reg_addr, data_read);
-    }
-#endif
-    i++;
-  }
-}
-

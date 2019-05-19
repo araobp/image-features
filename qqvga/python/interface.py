@@ -5,13 +5,14 @@ import traceback
 BAUD_RATE = 460800          # UART baud rate
 
 # Commands
-PIXELS = b'p'
+FULL_FRAME = b'f'
+SQUARE_FRAME = b's'
 DIFF = b'd'
 GRAY = b'g'
 EDGE = b'e'
 SCCB_WRITE = b'w'
 SCCB_READ = b'r'
-COMMANDS = (PIXELS, DIFF, GRAY, EDGE)
+COMMANDS = (FULL_FRAME, SQUARE_FRAME, DIFF, GRAY, EDGE)
 COMMANDS_GRAY = (GRAY, EDGE)
 
 # OV7670 registers
@@ -22,13 +23,11 @@ CONTRAS_ADDR = 0x56
 QQVGA_WIDTH = 160
 QQVGA_HEIGHT = 120
 
-NUM_SAMPLES = {"q": QQVGA_WIDTH * QQVGA_HEIGHT * 2,
-               "m": 120 * 120 * 2,
-               "s": 32 * 32 * 2}
+NUM_SAMPLES = {"f": QQVGA_WIDTH * QQVGA_HEIGHT * 2,
+               "s": 120 * 120 * 2}
 
-SHAPE = {"q": (QQVGA_HEIGHT, QQVGA_WIDTH, 3),
-         "m": (120, 120, 3),
-         "s": (32, 32, 3)}
+SHAPE = {"f": (QQVGA_HEIGHT, QQVGA_WIDTH, 3),
+         "s": (120, 120, 3)}
 
 def yuv2rgb(y, u, v):
 

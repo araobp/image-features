@@ -20,4 +20,6 @@ void qqvga_to_120x120(uint16_t *pSrc, uint16_t *pDst);
 
 void qqvga_to_30x30(uint16_t src_image[QQVGA_HEIGHT][QQVGA_WIDTH], uint16_t dst_image[32][32]);
 
+void diff(uint8_t *pCurrent, uint8_t *pPrev);
+
 #endif /* IMAGE_H_ */

@@ -18,7 +18,7 @@ import image
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("port", help="serial port identifier")
-parser.add_argument("-s", "--size", help="image sizes", default="m")
+parser.add_argument("-s", "--size", help="image sizes", default="s")
 parser.add_argument("-e", "--effect", help="effect", default=None)
 args = parser.parse_args()
 
@@ -57,14 +57,23 @@ if __name__ == '__main__':
     def pixels():
         global data, ax
         ax.clear()
+        if args.size == 'f':
+            data = gui.plot(ax, interface.FULL_FRAME)
+        elif args.size == 's' and args.effect == None:
+            data = gui.plot(ax, interface.SQUARE_FRAME)
+        elif args.size == 's' and args.effect == 'd':
+            data = gui.plot(ax, interface.DIFF)
+
+        '''
         if args.effect is None:
-            data = gui.plot(ax, interface.PIXELS)
+            data = gui.plot(ax, interface.FULL_FRAME)
         elif args.effect == 'd':
             data = gui.plot(ax, interface.DIFF)
         elif args.effect == 'g':
             data = gui.plot(ax, interface.GRAY, cmap='gray')
         elif args.effect == 'e':
             data = gui.plot(ax, interface.EDGE, cmap='gray')
+        '''
         fig.tight_layout()
         canvas.draw()
 
