@@ -76,7 +76,7 @@ I exchanged a camera with another one that supports 170 degrees view angle. Sinc
 
 ## My related works
 
-Sensors used for adge AI:
+Sensors used for edge AI:
 - 9-axis sensor (MEMS)
 - Mic sensor (MEMS)
 - Infrared array sensor
